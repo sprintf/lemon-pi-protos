@@ -8,7 +8,7 @@ message CarNumber {
    string car_number = 1;
 }
 
-service LemonPiCommsService {
+service CommsService {
 
    rpc PingPong(google.protobuf.Empty) returns (google.protobuf.Empty);
 
