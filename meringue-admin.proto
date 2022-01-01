@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option java_package = "com.normtronix.meringue";
+
+// Admin Service for managing current races, connecting and
+// disconnecting the race meta data for them.
+service AdminService {
+
+  rpc ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+
+  rpc auth(AuthRequest) returns (AuthResponse);
+
+  rpc listTracks(google.protobuf.Empty) returns (TrackMetadataResponse);
+
+  rpc connectToRaceData(ConnectToRaceDataRequest) returns (RaceDataConnectionResponse);
+
+  rpc listRaceDataConnections(google.protobuf.Empty) returns (RaceDataConnectionsResponse);
+
+  rpc disconnectRaceData(RaceDataConnectionRequest) returns (google.protobuf.Empty);
+}
+
+message AuthRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message AuthResponse {
+  string bearerToken = 1;
+}
+
+message TrackMetadataResponse {
+  repeated TrackMetaData track = 1;
+}
+
+message TrackMetaData {
+  string code = 1;
+  string name = 2;
+  float lat = 3;
+  float long = 4;
+}
+
+enum RaceDataProvider {
+  PROVIDER_UNKNOWN = 0;
+  PROVIDER_RM = 1;
+}
+
+message ConnectToRaceDataRequest {
+  RaceDataProvider provider = 1;
+  string providerId = 2;
+  string trackCode = 3;
+}
+
+message RaceDataConnectionsResponse {
+  repeated RaceDataConnectionResponse response = 1;
+}
+
+message RaceDataConnectionResponse {
+  bool running = 1;
+  string handle = 2;
+  string name = 3;
+}
+
+message RaceDataConnectionRequest {
+  string handle = 1;
+}
