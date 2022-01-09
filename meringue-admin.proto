@@ -59,7 +59,8 @@ message RaceDataConnectionsResponse {
 message RaceDataConnectionResponse {
   bool running = 1;
   string handle = 2;
-  string name = 3;
+  string trackName = 3;
+  string trackCode = 4;
 }
 
 message RaceDataConnectionRequest {
