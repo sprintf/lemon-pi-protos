@@ -19,6 +19,8 @@ service AdminService {
   rpc listRaceDataConnections(google.protobuf.Empty) returns (RaceDataConnectionsResponse);
 
   rpc disconnectRaceData(RaceDataConnectionRequest) returns (google.protobuf.Empty);
+
+  rpc listLiveRaces(google.protobuf.Empty) returns (LiveRaceListResponse);
 }
 
 message AuthRequest {
@@ -65,4 +67,14 @@ message RaceDataConnectionResponse {
 
 message RaceDataConnectionRequest {
   string handle = 1;
+}
+
+message LiveRace {
+  string raceId = 1;
+  string trackName = 2;
+  string eventName = 3;
+}
+
+message LiveRaceListResponse {
+  repeated LiveRace races = 1;
 }
