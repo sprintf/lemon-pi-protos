@@ -131,7 +131,9 @@ message CarTelemetry {
    // last lap time is in seconds and fractions of seconds
    float last_lap_time = 6;
 
-   int32 last_lap_fuel_usage = 7;
+   // no longer in use
+   // int32 last_lap_fuel_usage = 7;
+   reserved 7;
 
    int32 fuel_remaining_percent = 8;
 
