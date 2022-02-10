@@ -223,6 +223,8 @@ message ToPitMessage {
       CarTelemetry telemetry = 2;
       EnteringPits pitting = 3;
       LeavingPits entering = 4;
+      RaceStatus race_status = 5;
+      RacePosition race_position = 6;
    }
 }
 
