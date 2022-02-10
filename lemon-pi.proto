@@ -115,6 +115,8 @@ message RacePosition {
    // position in the class of car. Zero if there are no classes
    int32 position_in_class = 9;
 
+   // last lap time is in seconds and fractions of seconds
+   float last_lap_time = 10;
 }
 
 message CarTelemetry {
