@@ -21,6 +21,8 @@ service AdminService {
   rpc disconnectRaceData(RaceDataConnectionRequest) returns (google.protobuf.Empty);
 
   rpc listLiveRaces(google.protobuf.Empty) returns (LiveRaceListResponse);
+
+  rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
 message AuthRequest {
