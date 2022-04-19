@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "race-flag-status.proto";
+
+option java_package = "com.normtronix.meringue";
+
+// Car Data service provides an open api for retrieving a car's position in the race,
+// as well as other telemetry that is available
+service CarDataService {
+
+  rpc ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+
+  rpc getCarData(CarDataRequest) returns (CarDataResponse);
+
+  rpc streamCarData(CarDataRequest) returns (stream CarDataResponse);
+
+  rpc getRaceField(RaceFieldRequest) returns (RaceFieldResponse);
+
+}
+
+message CarDataRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+}
+
+message CarDataResponse {
+  string carNumber = 1;
+  int64 timestamp = 2;
+  RaceFlagStatus flagStatus = 3;
+  int32 lapCount = 4;
+  int32 position = 5;
+  int32 positionInClass = 6;
+  float lastLapTime = 7;
+  string gap = 8;
+  int32 coolantTemp = 9;
+  int32 fuelRemainingPercent = 10;
+  string driverMessage = 11;
+  string carAhead = 12;
+  string carBehind = 13;
+  int32 fastestLap = 14;
+  float fastestLapTime = 15;
+}
+
+message RaceFieldRequest {
+  string trackCode = 1;
+}
+
+message RaceFieldResponse {
+  repeated RaceParticipant participants = 1;
+}
+
+message RaceParticipant {
+  string carNumber = 1;
+  string teamName = 2;
+}
+

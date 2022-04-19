@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "race-flag-status.proto";
 
 option java_package = "com.normtronix.meringue";
 
@@ -57,15 +58,6 @@ message DriverMessage {
 
    string car_number = 5;
 
-}
-
-enum RaceFlagStatus {
-   UNKNOWN = 0;
-   GREEN = 1;
-   YELLOW = 2;
-   RED = 3;
-   BLACK = 4;
-   FINISH = 5;
 }
 
 // the race status. Only sent when it changes
