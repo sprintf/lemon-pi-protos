@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "com.normtronix.meringue";
+
+enum RaceFlagStatus {
+  UNKNOWN = 0;
+  GREEN = 1;
+  YELLOW = 2;
+  RED = 3;
+  BLACK = 4;
+  FINISH = 5;
+}
