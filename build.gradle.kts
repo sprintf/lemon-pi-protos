@@ -9,7 +9,7 @@ val grpcVersion = "1.43.2"
 plugins {
     idea
     `java-library`
-    kotlin("jvm") // version "1.5.31" can't have this in included project
+    kotlin("jvm")
     id("com.google.protobuf") version "0.8.18"
 }
 
