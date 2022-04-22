@@ -3,9 +3,9 @@ name: Build protobuf library to make sure it compiles
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 jobs:
   build:
 
