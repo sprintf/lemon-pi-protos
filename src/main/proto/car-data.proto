@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 import "race-flag-status.proto";
+import "lemon-pi.proto";
 
 option java_package = "com.normtronix.meringue";
 
@@ -16,6 +17,8 @@ service CarDataService {
   rpc streamCarData(CarDataRequest) returns (stream CarDataResponse);
 
   rpc getRaceField(RaceFieldRequest) returns (RaceFieldResponse);
+
+  rpc streamCarPositionsAtTrack(CarPositionDataRequest) returns (stream CarPositionDataResponse);
 
 }
 
@@ -40,6 +43,15 @@ message CarDataResponse {
   string carBehind = 13;
   int32 fastestLap = 14;
   float fastestLapTime = 15;
+}
+
+message CarPositionDataRequest {
+  string trackCode = 1;
+}
+
+message CarPositionDataResponse {
+  string carNumber = 1;
+  GpsPosition position = 2;
 }
 
 message RaceFieldRequest {
