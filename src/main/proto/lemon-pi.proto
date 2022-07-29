@@ -109,6 +109,9 @@ message RacePosition {
 
    // last lap time is in seconds and fractions of seconds
    float last_lap_time = 10;
+
+   // the time (in seconds) to the lead car in the class of this car
+   float gap_to_front = 11;
 }
 
 message CarTelemetry {
