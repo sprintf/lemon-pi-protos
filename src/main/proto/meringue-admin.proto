@@ -22,6 +22,8 @@ service AdminService {
 
   rpc listLiveRaces(google.protobuf.Empty) returns (LiveRaceListResponse);
 
+  rpc findLiveRaces(SearchTermsRequest) returns (LiveRaceListResponse);
+
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
@@ -48,6 +50,7 @@ message TrackMetaData {
 enum RaceDataProvider {
   PROVIDER_UNKNOWN = 0;
   PROVIDER_RM = 1;
+  PROVIDER_RH = 2;
 }
 
 message ConnectToRaceDataRequest {
@@ -75,8 +78,13 @@ message LiveRace {
   string raceId = 1;
   string trackName = 2;
   string eventName = 3;
+  RaceDataProvider provider = 4;
 }
 
 message LiveRaceListResponse {
   repeated LiveRace races = 1;
+}
+
+message SearchTermsRequest {
+  repeated string term = 1;
 }
