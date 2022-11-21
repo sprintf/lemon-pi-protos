@@ -24,6 +24,10 @@ service AdminService {
 
   rpc findLiveRaces(SearchTermsRequest) returns (LiveRaceListResponse);
 
+  rpc sendDriverMessage(DriverMessageRequest) returns (google.protobuf.Empty);
+
+  rpc listConnectedCars(ConnectedCarRequest) returns (ConnectedCarResponse);
+
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
@@ -87,4 +91,18 @@ message LiveRaceListResponse {
 
 message SearchTermsRequest {
   repeated string term = 1;
+}
+
+message DriverMessageRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+  string message = 3;
+}
+
+message ConnectedCarRequest {
+  string trackCode = 1;
+}
+
+message ConnectedCarResponse {
+  repeated string carNumber = 1;
 }
