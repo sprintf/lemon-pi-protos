@@ -28,6 +28,10 @@ service AdminService {
 
   rpc listConnectedCars(ConnectedCarRequest) returns (ConnectedCarResponse);
 
+  rpc resetFastLapTime(ResetFastLapTimeRequest) returns (google.protobuf.Empty);
+
+  rpc setTargetLapTime(SetTargetLapTimeRequest) returns (google.protobuf.Empty);
+
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
@@ -105,4 +109,15 @@ message ConnectedCarRequest {
 
 message ConnectedCarResponse {
   repeated string carNumber = 1;
+}
+
+message ResetFastLapTimeRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+}
+
+message SetTargetLapTimeRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+  int32 targetTimeSeconds = 3;
 }
