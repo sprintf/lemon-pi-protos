@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 option java_package = "com.normtronix.meringue";
 
@@ -24,13 +25,13 @@ service AdminService {
 
   rpc findLiveRaces(SearchTermsRequest) returns (LiveRaceListResponse);
 
-  rpc sendDriverMessage(DriverMessageRequest) returns (google.protobuf.Empty);
+  rpc sendDriverMessage(DriverMessageRequest) returns (google.protobuf.BoolValue);
 
   rpc listConnectedCars(ConnectedCarRequest) returns (ConnectedCarResponse);
 
-  rpc resetFastLapTime(ResetFastLapTimeRequest) returns (google.protobuf.Empty);
+  rpc resetFastLapTime(ResetFastLapTimeRequest) returns (google.protobuf.BoolValue);
 
-  rpc setTargetLapTime(SetTargetLapTimeRequest) returns (google.protobuf.Empty);
+  rpc setTargetLapTime(SetTargetLapTimeRequest) returns (google.protobuf.BoolValue);
 
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
