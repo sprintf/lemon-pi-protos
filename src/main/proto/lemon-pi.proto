@@ -112,6 +112,11 @@ message RacePosition {
 
    // the time (in seconds) to the lead car in the class of this car
    float gap_to_front = 11;
+
+   // the time in positive or negative seconds that the car closed on the leader
+   // negative means it closed on the leader
+   // positive means the leader is getting away
+   float gap_to_front_delta = 12;
 }
 
 message CarTelemetry {
