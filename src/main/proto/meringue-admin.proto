@@ -33,6 +33,8 @@ service AdminService {
 
   rpc setTargetLapTime(SetTargetLapTimeRequest) returns (google.protobuf.BoolValue);
 
+  rpc getTrackForCar(CarLocationRequest) returns (google.protobuf.StringValue);
+
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
@@ -121,4 +123,10 @@ message SetTargetLapTimeRequest {
   string trackCode = 1;
   string carNumber = 2;
   int32 targetTimeSeconds = 3;
+}
+
+message CarLocationRequest {
+  string carNumber = 1;
+  string ipAddress = 2;
+  string key = 3;
 }
