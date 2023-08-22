@@ -35,6 +35,12 @@ service AdminService {
 
   rpc getTrackForCar(CarLocationRequest) returns (google.protobuf.StringValue);
 
+  rpc getCarStatus(CarStatusSlackRequest) returns (CarStatusResponse);
+
+  rpc associateCarWithSlack(CarAddViaSlackRequest) returns (CarStatusResponse);
+
+  rpc disassociateCarWithSlack(CarRemoveFromSlackRequest) returns (CarStatusResponse);
+
   rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
@@ -129,4 +135,31 @@ message CarLocationRequest {
   string carNumber = 1;
   string ipAddress = 2;
   string key = 3;
+}
+
+message CarStatusSlackRequest {
+  string slackToken = 1;
+}
+
+message CarStatus {
+  string carNumber = 1;
+  string trackCode = 2;
+  bool online = 3;
+  string ipAddress = 4;
+}
+
+message CarStatusResponse {
+  repeated CarStatus statusList = 1;
+}
+
+message CarAddViaSlackRequest {
+  string ipAddress = 1;
+  string slackToken = 2;
+  string slackAppId = 3;
+}
+
+message CarRemoveFromSlackRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+  string slackAppId = 3;
 }
