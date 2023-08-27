@@ -11,6 +11,6 @@ rootProject.name = "lemon-pi-protos"
 
 pluginManagement {
     plugins {
-        kotlin("jvm") version "1.6.21"
+        kotlin("jvm") version "1.8.22"
     }
 }
