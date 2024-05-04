@@ -22,15 +22,15 @@ jobs:
 
     - name: install dependencies
       run: |
-        mkdir -p generated/lemon_pi
+        mkdir -p generated
         pip install "grpcio==1.59.0" "grpcio-tools==1.59.0" "protobuf==4.24.1"
 
     - name: generate client code
       id: generate
       run: |
         python -m grpc_tools.protoc \
-               --python_out=generated/lemon_pi \
-               --grpc_python_out=generated/lemon_pi \
+               --python_out=generated \
+               --grpc_python_out=generated \
                -I=src/main/proto \
                lemon-pi.proto race-flag-status.proto
         if [[ $(git diff --stat) != '' ]]; then
