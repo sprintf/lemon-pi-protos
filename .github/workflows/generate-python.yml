@@ -1,0 +1,28 @@
+
+name: Protobuf Python client generator
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.11" ]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: install dependencies
+      run: |
+        mnkdir lemon_pi
+        pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
+        python -m grpc_tools.protoc \
+               --python_out=lemon_pi \
+               -I=src/main/proto \
+               lemon-pi.proto race-flag-status.proto
