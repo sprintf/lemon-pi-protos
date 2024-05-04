@@ -37,7 +37,7 @@ jobs:
 
 
     - id: pull-request
-      if: steps.generate.outcome == 'success' && env.diff_state == 'dirty'
+      if: steps.generate.outcome == 'success'
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.ACCESS_TOKEN }}
