@@ -34,12 +34,13 @@ jobs:
                lemon-pi.proto race-flag-status.proto
         if [[ $(git diff --stat) != '' ]]; then
           echo "diff_state=dirty" >> $GITHUB_ENV
+          echo "changes made"
         else
           echo "diff_state=clean" >> $GITHUB_ENV
         fi
 
     - name: pull-request
-      if: steps.generate.outcome == 'success' && env.diff_state == 'dirty'
+      if: env.diff_state == 'dirty'
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.ACCESS_TOKEN }}
