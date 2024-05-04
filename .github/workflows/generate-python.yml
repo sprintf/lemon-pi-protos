@@ -20,7 +20,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: install dependencies
       run: |
-        mnkdir lemon_pi
+        mkdir lemon_pi
         pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
         python -m grpc_tools.protoc \
                --python_out=lemon_pi \
