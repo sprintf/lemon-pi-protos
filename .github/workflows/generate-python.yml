@@ -22,7 +22,7 @@ jobs:
 
     - name: install dependencies
       run: |
-        mkdir lemon_pi
+        mkdir -p lemon_pi
         pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
 
     - name: generate client code
@@ -32,12 +32,14 @@ jobs:
                --python_out=lemon_pi \
                -I=src/main/proto \
                lemon-pi.proto race-flag-status.proto
-    - name: store results
-      run: |
-        ls lemon_pi
+        if [[ $(git diff --stat) != '' ]]; then
+          echo "diff_state=dirty" >> $GITHUB_ENV
+        else
+          echo "diff_state=clean" >> $GITHUB_ENV
+        fi
 
     - name: pull-request
-      if: steps.generate.outcome == 'success'
+      if: steps.generate.outcome == 'success' && env.diff_state == 'dirty'
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.ACCESS_TOKEN }}
