@@ -23,7 +23,7 @@ jobs:
     - name: install dependencies
       run: |
         mkdir -p generated/lemon_pi
-        pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
+        pip install "grpcio>=1.59.0" "grpcio-tools>=1.59.0" "protobuf>=4.24.1"
 
     - name: generate client code
       id: generate
