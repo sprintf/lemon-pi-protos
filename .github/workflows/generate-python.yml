@@ -40,7 +40,7 @@ jobs:
       if: steps.generate.outcome == 'success' && env.diff_state == 'dirty'
       uses: peter-evans/create-pull-request@v5
       with:
-        token: ${{ ACCESS_TOKEN }}
+        token: ${{ secrets.ACCESS_TOKEN }}
         branch: ${{ env.tmp_branch }}
         base: master
         delete-branch: true
