@@ -26,6 +26,7 @@ jobs:
         pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
 
     - name: generate client code
+      id: generate
       run: |
         python -m grpc_tools.protoc \
                --python_out=lemon_pi \
@@ -35,8 +36,7 @@ jobs:
       run: |
         ls lemon_pi
 
-
-    - id: pull-request
+    - name: pull-request
       if: steps.generate.outcome == 'success'
       uses: peter-evans/create-pull-request@v5
       with:
