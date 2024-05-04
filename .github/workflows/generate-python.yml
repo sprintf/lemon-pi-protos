@@ -41,7 +41,7 @@ jobs:
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.ACCESS_TOKEN }}
-        branch: ${{ env.tmp_branch }}
+        branch-suffix: 'timestamp'
         base: master
         delete-branch: true
         title: 'Generate Python Client.md'
