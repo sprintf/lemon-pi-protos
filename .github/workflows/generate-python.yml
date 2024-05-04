@@ -30,6 +30,7 @@ jobs:
       run: |
         python -m grpc_tools.protoc \
                --python_out=generated/lemon_pi \
+               --grpc_python_out=generated/lemon_pi \
                -I=src/main/proto \
                lemon-pi.proto race-flag-status.proto
         if [[ $(git diff --stat) != '' ]]; then
