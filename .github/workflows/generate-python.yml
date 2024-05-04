@@ -22,7 +22,12 @@ jobs:
       run: |
         mkdir lemon_pi
         pip install "grpcio>=1.53.0" "grpcio-tools>=1.53.0" "protobuf>=3.24.1"
+    - name: generate client code
+      run: |
         python -m grpc_tools.protoc \
                --python_out=lemon_pi \
                -I=src/main/proto \
                lemon-pi.proto race-flag-status.proto
+    - name: store results
+      run: |
+        ls lemon_pi
