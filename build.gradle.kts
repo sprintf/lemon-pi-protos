@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.google.protobuf.gradle.*
 
-val protobufVersion = "3.24.1"
+val protobufVersion = "3.25.3"
 // setting this to match lemon-pi
 val grpcVersion = "1.57.0"
 
@@ -35,6 +35,7 @@ dependencies {
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")
     implementation("io.grpc:grpc-stub:${grpcVersion}")
     implementation("io.grpc:grpc-kotlin-stub:1.2.0")
+    implementation("com.google.protobuf:protobuf-java:${protobufVersion}")
     compileOnly("jakarta.annotation:jakarta.annotation-api:1.3.5") // Java 9+ compatibility - Do NOT update to 2.0.0
 }
 
