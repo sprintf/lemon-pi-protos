@@ -10,6 +10,7 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("com.google.protobuf") version "0.9.4"
+    `maven-publish`
 }
 
 group = "com.normtronix"
@@ -56,6 +57,57 @@ protobuf {
             it.plugins {
                 id("grpc")
                 id("grpckt")
+            }
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            
+            pom {
+                name.set("Lemon Pi Protos")
+                description.set("Protocol Buffer definitions for the Lemon Pi racing telemetry system")
+                url.set("https://github.com/sprintf/lemon-pi-protos")
+                
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id.set("sprintf")
+                        name.set("Paul Norman")
+                        email.set("pauln@normtronix.com")
+                    }
+                }
+                
+                scm {
+                    connection.set("scm:git:git://github.com/sprintf/lemon-pi-protos.git")
+                    developerConnection.set("scm:git:ssh://github.com:sprintf/lemon-pi-protos.git")
+                    url.set("https://github.com/sprintf/lemon-pi-protos/tree/master")
+                }
+            }
+        }
+    }
+    
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sprintf/lemon-pi-protos")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
