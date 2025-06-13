@@ -87,8 +87,8 @@ publishing {
                 developers {
                     developer {
                         id.set("sprintf")
-                        name.set("Paul Norman")
-                        email.set("pauln@normtronix.com")
+                        name.set("Paul Normington")
+                        email.set("paul@normingtons.org")
                     }
                 }
                 
