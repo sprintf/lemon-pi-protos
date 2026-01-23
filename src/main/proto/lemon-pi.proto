@@ -60,6 +60,20 @@ message DriverMessage {
 
 }
 
+// used to display the current name of the driver in the car
+message DriverName {
+
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   string driver_name = 4;
+
+   string car_number = 5;
+}
+
 // the race status. Only sent when it changes
 
 message RaceStatus {
@@ -119,6 +133,16 @@ message RacePosition {
    float gap_to_front_delta = 12;
 }
 
+message SessionGpsData {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   bytes payload = 4;
+}
+
 message CarTelemetry {
    int32 seq_num = 1;
 
@@ -141,6 +165,9 @@ message CarTelemetry {
 
    // a list of recently seen + acknowledged messages by the driver
    repeated string messages_seen = 9;
+
+   // a map of extra sensors
+   map<string, int32> extraSensors = 10;
 }
 
 message EnteringPits {
@@ -206,6 +233,28 @@ message ResetFastLap {
    string car_number = 4;
 }
 
+message EditTeamEmailAddress {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   string email_address = 4;
+
+   bool add = 5;  //  true = add; false = remove
+}
+
+message TeamEmailAddresses {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   repeated string email_address = 4;
+}
+
 message ToCarMessage {
    oneof to_car {
       Ping ping = 1;
@@ -216,6 +265,8 @@ message ToCarMessage {
       RemoteReboot reboot = 6;
       SetTargetTime set_target = 7;
       ResetFastLap reset_fast_lap = 8;
+      DriverName driver_name = 9;
+      TeamEmailAddresses email_addresses = 10;
    }
 }
 
@@ -227,6 +278,8 @@ message ToPitMessage {
       LeavingPits entering = 4;
       RaceStatus race_status = 5;
       RacePosition race_position = 6;
+      SessionGpsData gps_data = 7;
+      EditTeamEmailAddress email_address = 8;
    }
 }
 
