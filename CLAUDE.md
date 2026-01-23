@@ -12,6 +12,7 @@ The project defines several gRPC services:
 - **CommsService** (`lemon-pi.proto`): Core communication between cars and pits, handling real-time messaging, telemetry, and race status updates
 - **CarDataService** (`car-data.proto`): Public API for retrieving car position, telemetry, and race field data
 - **AdminService** (`meringue-admin.proto`): Administrative functions for managing race connections and car associations
+- **PitcrewService** (`pitcrew.proto`): Functions for a pit crew to observe their cars
 
 Message types include:
 - Car telemetry (coolant temp, fuel levels, lap times)

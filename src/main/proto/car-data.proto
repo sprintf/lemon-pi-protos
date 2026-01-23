@@ -43,6 +43,8 @@ message CarDataResponse {
   string carBehind = 13;
   int32 fastestLap = 14;
   float fastestLapTime = 15;
+  // extra sensors ... could be temp/pressure
+  map<string, int32> extraSensors = 16;
 }
 
 message CarPositionDataRequest {
