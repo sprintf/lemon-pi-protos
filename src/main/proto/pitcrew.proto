@@ -30,7 +30,7 @@ service PitcrewService {
 
 message PitAuthRequest {
   string username = 1;
-  int32 team_code = 2;
+  string teamCode = 2;
 }
 
 message PitAuthResponse {
@@ -40,7 +40,7 @@ message PitAuthResponse {
 message PitDriverMessageRequest {
   string trackCode = 1;
   string carNumber = 2;
-  string message = 4;
+  string message = 3;
 }
 
 message PitResetFastLapTimeRequest {
@@ -51,7 +51,7 @@ message PitResetFastLapTimeRequest {
 message PitSetTargetLapTimeRequest {
   string trackCode = 1;
   string carNumber = 2;
-  int32 targetTimeSeconds = 4;
+  int32 targetTimeSeconds = 3;
 }
 
 message PitCarStatus {
@@ -68,7 +68,7 @@ message PitCarStatusResponse {
 message PitSetDriverNameRequest {
   string trackCode = 1;
   string carNumber = 2;
-  string driver_name = 4;
+  string driverName = 3;
 }
 
 message PitCarDataRequest {
