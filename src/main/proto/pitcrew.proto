@@ -24,7 +24,7 @@ service PitcrewService {
 
   rpc setDriverName(PitSetDriverNameRequest) returns (google.protobuf.BoolValue);
 
-  rpc streamCarData(PitCarDataRequest) returns (stream PitCarDataResponse);
+  rpc streamCarDataV2(PitCarDataRequest) returns (stream ToPitCrewMessage);
 
 }
 
@@ -76,7 +76,41 @@ message PitCarDataRequest {
   string carNumber = 2;
 }
 
-message PitCarDataResponse {
+message EnteringPits {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+}
+
+message LeavingPits {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+}
+
+message RaceStatus {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+   RaceFlagStatus flag_status = 4;
+}
+
+message SectorComplete {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+   float sector_time = 6;
+   string sector_name = 7;   //  e.g. S1, S2, S3 or could be fancier "the esses"
+   int32 sector_num = 8;  // e.g. 1, 2, 3
+   float predicted_lap_time = 9; // in seconds and bits of seconds
+   float predicted_delta_to_target = 10;   // e.g. +1.2 / -0.3
+   float predicted_delta_to_best = 11;   // e.g. +1.2 / -0.3
+   int32 lap_count = 12; // what lap the car is on, or this sector belongs to
+   float best_sector_time = 13; // the best sector time ... can be zero
+}
+
+
+message PitCarData {
   string carNumber = 1;
   int64 timestamp = 2;
   RaceFlagStatus flagStatus = 3;
@@ -96,4 +130,14 @@ message PitCarDataResponse {
   map<string, int32> extraSensors = 16;
 }
 
+
+message ToPitCrewMessage {
+   oneof to_pit_crew {
+      EnteringPits pitting = 2;
+      LeavingPits entering = 3;
+      RaceStatus race_status = 4;
+      PitCarData car_data = 5;
+      SectorComplete sector_details = 6;
+   }
+}
 
