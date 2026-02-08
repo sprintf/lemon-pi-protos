@@ -245,6 +245,16 @@ message EditTeamEmailAddress {
    bool add = 5;  //  true = add; false = remove
 }
 
+message SleepApp {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   string car_number = 4;
+}
+
 message TeamEmailAddresses {
    int32 seq_num = 1;
 
@@ -254,6 +264,31 @@ message TeamEmailAddresses {
 
    repeated string email_address = 4;
 }
+
+
+// Sector completion message sent from the car to the Server.
+// Can support any number of sectors (not nec. 3)
+// Can also support named sectors for special parts of a track
+message SectorComplete {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   float sector_time = 6;
+
+   string sector_name = 7;   //  e.g. S1, S2, S3 or could be fancier "the esses"
+
+   int32 sector_num = 8;  // e.g. 1, 2, 3
+
+   float predicted_lap_time = 9; // in seconds and bits of seconds
+
+   float predicted_delta_to_target = 10;   // e.g. +1.2 / -0.3
+
+   float predicted_delta_to_best = 11;   // e.g. +1.2 / -0.3
+}
+
 
 message ToCarMessage {
    oneof to_car {
@@ -267,6 +302,7 @@ message ToCarMessage {
       ResetFastLap reset_fast_lap = 8;
       DriverName driver_name = 9;
       TeamEmailAddresses email_addresses = 10;
+      SleepApp sleep_app = 11;
    }
 }
 
@@ -280,6 +316,7 @@ message ToPitMessage {
       RacePosition race_position = 6;
       SessionGpsData gps_data = 7;
       EditTeamEmailAddress email_address = 8;
+      SectorComplete sector_details = 9;
    }
 }
 
