@@ -287,6 +287,10 @@ message SectorComplete {
    float predicted_delta_to_target = 10;   // e.g. +1.2 / -0.3
 
    float predicted_delta_to_best = 11;   // e.g. +1.2 / -0.3
+
+   int32 lap_count = 12; // what lap the car is on, or this sector belongs to
+
+   float best_sector_time = 13; // the best sector time ... can be zero
 }
 
 
