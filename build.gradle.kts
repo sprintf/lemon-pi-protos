@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.google.protobuf.gradle.*
 
 val protobufVersion = "3.25.3"
-// setting this to match lemon-pi
-val grpcVersion = "1.57.0"
+val grpcVersion = "1.63.0"
+val grpcKotlinVersion = "1.4.1"
 
 plugins {
     idea
@@ -14,8 +14,8 @@ plugins {
 }
 
 group = "com.normtronix"
-version = "1.6"
-java.sourceCompatibility = JavaVersion.VERSION_11
+version = "2.0"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 
 repositories {
@@ -25,17 +25,17 @@ repositories {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")
     implementation("io.grpc:grpc-stub:${grpcVersion}")
-    implementation("io.grpc:grpc-kotlin-stub:1.2.0")
+    implementation("io.grpc:grpc-kotlin-stub:${grpcKotlinVersion}")
     implementation("com.google.protobuf:protobuf-java:${protobufVersion}")
     compileOnly("jakarta.annotation:jakarta.annotation-api:1.3.5") // Java 9+ compatibility - Do NOT update to 2.0.0
 }
@@ -49,7 +49,7 @@ protobuf {
             artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
         }
         id ("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:1.2.0:jdk7@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:${grpcKotlinVersion}:jdk8@jar"
         }
     }
     generateProtoTasks {
