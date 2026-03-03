@@ -75,7 +75,7 @@ message PitSetDriverNameRequest {
 message PitCarDataRequest {
   string trackCode = 1;
   string carNumber = 2;
-  int32 sinceSeq = 3;     // replay messages with seq > sinceSeq before going live; 0 means full history
+  int64 sinceTimestamp = 3;  // replay messages with timestamp > sinceTimestamp before going live; 0 means full history
 }
 
 message PitCarData {
@@ -100,8 +100,8 @@ message PitCarData {
 
 
 message ToPitCrewMessage {
-   int32 seq_num = 1;          // global Meringue counter across all flows — gaps are normal per car, use as replay cursor
-   int64 timestamp = 7;    // wall-clock time in ms when Meringue emitted this message
+   int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
+   int64 timestamp = 7;   // wall-clock ms when Meringue emitted this message — use as replay cursor
    oneof to_pit_crew {
       EnteringPits pitting = 2;
       LeavingPits entering = 3;
