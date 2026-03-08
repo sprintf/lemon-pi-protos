@@ -64,7 +64,6 @@ protobuf {
 
 java {
     withSourcesJar()
-    withJavadocJar()
 }
 
 publishing {
