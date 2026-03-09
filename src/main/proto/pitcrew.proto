@@ -110,6 +110,13 @@ message PitVoicePacket {
   string initiatorId = 7; // id of the client initiating this
 }
 
+// the car is requesting to talk
+message CarVoiceCallRequest {
+  string trackCode = 1;
+  string carNumber = 2;
+  int32 timestamp = 3;
+}
+
 
 message ToPitCrewMessage {
    int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
@@ -121,6 +128,7 @@ message ToPitCrewMessage {
       PitCarData car_data = 5;
       SectorComplete sector_details = 6;
       PitVoicePacket audio_packet = 8;
+      CarVoiceCallRequest call_request = 9;
    }
 }
 
