@@ -119,6 +119,7 @@ message ToPitCrewMessage {
       RaceStatus race_status = 4;
       PitCarData car_data = 5;
       SectorComplete sector_details = 6;
+      PitVoicePacket audio_packet = 8;
    }
 }
 
