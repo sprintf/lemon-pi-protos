@@ -108,6 +108,7 @@ message PitVoicePacket {
   int32  audioSeqNum = 5;  // for ordering/gap detection on Android
   bool   lastPacket = 6;  // signals end of transmission
   string initiatorId = 7; // id of the client initiating this
+  string mimeType = 8;
 }
 
 // the car is requesting to talk

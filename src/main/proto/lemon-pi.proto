@@ -311,6 +311,7 @@ message CarAudioMessage {
    bytes  audioData  = 4;  // raw WebM/Opus chunk from MediaRecorder
    int32  audioSeqNum = 5;  // for ordering/gap detection on Android
    bool   lastPacket = 6;  // signals end of transmission
+   string mimeType = 7;
 }
 
 message VoiceCallRequest {
