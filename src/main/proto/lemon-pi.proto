@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
-import "google/protobuf/wrappers.proto";
+import "common.proto";
 import "race-flag-status.proto";
 
+option optimize_for = LITE_RUNTIME;
 option java_package = "com.normtronix.meringue";
 
 message CarNumber {
@@ -12,17 +12,17 @@ message CarNumber {
 
 service CommsService {
 
-   rpc PingPong(google.protobuf.Empty) returns (google.protobuf.Empty);
+   rpc PingPong(Empty) returns (Empty);
 
-   rpc sendMessageFromCar(ToPitMessage) returns (google.protobuf.Empty);
+   rpc sendMessageFromCar(ToPitMessage) returns (Empty);
 
-   rpc sendMessageFromPits(ToCarMessage) returns (google.protobuf.Empty);
+   rpc sendMessageFromPits(ToCarMessage) returns (Empty);
 
    rpc receivePitMessages(CarNumber) returns (stream ToCarMessage);
 
    rpc receiveCarMessages(CarNumber) returns (stream ToPitMessage);
 
-   rpc talkFromCar(stream CarAudioMessage) returns (google.protobuf.BoolValue);
+   rpc talkFromCar(stream CarAudioMessage) returns (BoolValue);
 }
 
 

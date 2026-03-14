@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.normtronix.meringue";
+
+// Shared replacement types for google.protobuf well-known types,
+// so that all files remain LITE_RUNTIME-compatible for gRPC stub generation.
+
+message Empty {}
+
+message BoolValue {
+  bool value = 1;
+}
+
+message StringValue {
+  string value = 1;
+}

@@ -1,39 +1,39 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
-import "google/protobuf/wrappers.proto";
+import "common.proto";
 
+option optimize_for = LITE_RUNTIME;
 option java_package = "com.normtronix.meringue";
 
 // Admin Service for managing current races, connecting and
 // disconnecting the race meta data for them.
 service AdminService {
 
-  rpc ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc ping(Empty) returns (Empty);
 
   rpc auth(AuthRequest) returns (AuthResponse);
 
-  rpc listTracks(google.protobuf.Empty) returns (TrackMetadataResponse);
+  rpc listTracks(Empty) returns (TrackMetadataResponse);
 
   rpc connectToRaceData(ConnectToRaceDataRequest) returns (RaceDataConnectionResponse);
 
-  rpc listRaceDataConnections(google.protobuf.Empty) returns (RaceDataConnectionsResponse);
+  rpc listRaceDataConnections(Empty) returns (RaceDataConnectionsResponse);
 
-  rpc disconnectRaceData(RaceDataConnectionRequest) returns (google.protobuf.Empty);
+  rpc disconnectRaceData(RaceDataConnectionRequest) returns (Empty);
 
-  rpc listLiveRaces(google.protobuf.Empty) returns (LiveRaceListResponse);
+  rpc listLiveRaces(Empty) returns (LiveRaceListResponse);
 
   rpc findLiveRaces(SearchTermsRequest) returns (LiveRaceListResponse);
 
-  rpc sendDriverMessage(DriverMessageRequest) returns (google.protobuf.BoolValue);
+  rpc sendDriverMessage(DriverMessageRequest) returns (BoolValue);
 
   rpc listConnectedCars(ConnectedCarRequest) returns (ConnectedCarResponse);
 
-  rpc resetFastLapTime(ResetFastLapTimeRequest) returns (google.protobuf.BoolValue);
+  rpc resetFastLapTime(ResetFastLapTimeRequest) returns (BoolValue);
 
-  rpc setTargetLapTime(SetTargetLapTimeRequest) returns (google.protobuf.BoolValue);
+  rpc setTargetLapTime(SetTargetLapTimeRequest) returns (BoolValue);
 
-  rpc getTrackForCar(CarLocationRequest) returns (google.protobuf.StringValue);
+  rpc getTrackForCar(CarLocationRequest) returns (StringValue);
 
   rpc getCarStatus(CarStatusSlackRequest) returns (CarStatusResponse);
 
@@ -41,7 +41,7 @@ service AdminService {
 
   rpc disassociateCarWithSlack(CarRemoveFromSlackRequest) returns (CarStatusResponse);
 
-  rpc shutdown(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc shutdown(Empty) returns (Empty);
 }
 
 message AuthRequest {

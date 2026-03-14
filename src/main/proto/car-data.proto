@@ -1,16 +1,17 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
+import "common.proto";
 import "race-flag-status.proto";
 import "lemon-pi.proto";
 
+option optimize_for = LITE_RUNTIME;
 option java_package = "com.normtronix.meringue";
 
 // Car Data service provides an open api for retrieving a car's position in the race,
 // as well as other telemetry that is available
 service CarDataService {
 
-  rpc ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc ping(Empty) returns (Empty);
 
   rpc getCarData(CarDataRequest) returns (CarDataResponse);
 
