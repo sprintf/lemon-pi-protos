@@ -15,6 +15,8 @@ service PitcrewService {
 
   rpc auth(PitAuthRequest) returns (PitAuthResponse);
 
+  rpc qrAuthAndReg(QrAuthRequest) returns (QrAuthResponse);
+
   rpc carAuth(CarAuthRequest) returns (CarAuthResponse);
 
   rpc getCarStatus(Empty) returns (PitCarStatusResponse);
@@ -40,6 +42,19 @@ message PitAuthRequest {
 
 message PitAuthResponse {
   string bearerToken = 1;
+}
+
+message QrAuthRequest {
+  string deviceId  = 1;
+  string teamCode  = 2;
+  string email     = 3;
+  int64  timestamp = 4;  // unix epoch from QR — Meringue validates < 1hr old
+}
+
+message QrAuthResponse {
+  string bearerToken = 1;
+  string trackCode   = 2;
+  string carNumber   = 3;
 }
 
 message PitDriverMessageRequest {
