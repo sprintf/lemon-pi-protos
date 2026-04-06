@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.normtronix"
-version = "2.12"
+version = "2.13"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 

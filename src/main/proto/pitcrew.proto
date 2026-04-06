@@ -116,6 +116,7 @@ message PitCarData {
   float avgLapTime = 17;
   float carAheadAvgLapTime = 18;
   float carBehindAvgLapTime = 19;
+  string carBehindGap = 20;
 }
 
 message CarAuthRequest {
