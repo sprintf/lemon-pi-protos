@@ -22,7 +22,6 @@ service CommsService {
 
    rpc receiveCarMessages(CarNumber) returns (stream ToPitMessage);
 
-   rpc talkFromCar(stream CarAudioMessage) returns (BoolValue);
 }
 
 
@@ -304,16 +303,6 @@ message SectorComplete {
    float best_sector_time = 13; // the best sector time ... can be zero
 }
 
-message CarAudioMessage {
-   string carNumber = 1;
-   string trackCode = 2;
-   int32  messageStartTime = 3;
-   bytes  audioData  = 4;  // raw WebM/Opus chunk from MediaRecorder
-   int32  audioSeqNum = 5;  // for ordering/gap detection on Android
-   bool   lastPacket = 6;  // signals end of transmission
-   string mimeType = 7;
-}
-
 message VoiceCallRequest {
    int32 seq_num = 1;
 
@@ -336,7 +325,7 @@ message ToCarMessage {
       DriverName driver_name = 9;
       TeamEmailAddresses email_addresses = 10;
       SleepApp sleep_app = 11;
-      CarAudioMessage audio_message = 12;
+      // reserved 12;
    }
 }
 
