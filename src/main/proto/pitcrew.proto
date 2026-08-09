@@ -139,7 +139,7 @@ message CarVoiceCallRequest {
 message CarConnectionStatus {
   string trackCode = 1;
   string carNumber = 2;
-  bool is_connected = 3;
+  bool isConnected = 3;
 }
 
 
