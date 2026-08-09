@@ -136,6 +136,12 @@ message CarVoiceCallRequest {
   int32 timestamp = 3;
 }
 
+message CarConnectionStatus {
+  string trackCode = 1;
+  string carNumber = 2;
+  bool is_connected = 3;
+}
+
 
 message ToPitCrewMessage {
    int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
@@ -148,6 +154,7 @@ message ToPitCrewMessage {
       SectorComplete sector_details = 6;
       // reserved 8;
       CarVoiceCallRequest call_request = 9;
+      CarConnectionStatus connected_status = 10;
    }
 }
 
