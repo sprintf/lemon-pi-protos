@@ -60,6 +60,17 @@ message DriverMessage {
 
    string car_number = 5;
 
+   // is this a yes/no or just a simple confirmation
+   bool isYesNo = 6;
+
+}
+
+// how the driver answered a message from the pits
+enum DriverResponse {
+   // default, so an ack from a 2.16 car - which had no answer field - still reads correctly
+   RESPONSE_ACK = 0;
+   RESPONSE_YES = 1;
+   RESPONSE_NO = 2;
 }
 
 // sent from the car when the driver dismisses a message from the pits, confirming
@@ -77,6 +88,8 @@ message DriverMessageAck {
 
    // the text of the acknowledged message, so the pits can match it up
    string text = 5;
+
+   DriverResponse response = 6;
 
 }
 
