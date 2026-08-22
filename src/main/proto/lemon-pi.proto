@@ -62,6 +62,24 @@ message DriverMessage {
 
 }
 
+// sent from the car when the driver dismisses a message from the pits, confirming
+// that they read it. Not sent when a message times out unseen.
+message DriverMessageAck {
+
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   // the seq_num of the DriverMessage being acknowledged
+   int32 message_seq_num = 4;
+
+   // the text of the acknowledged message, so the pits can match it up
+   string text = 5;
+
+}
+
 // used to display the current name of the driver in the car
 message DriverName {
 
@@ -173,8 +191,9 @@ message CarTelemetry {
 
    int32 fuel_remaining_percent = 8;
 
-   // a list of recently seen + acknowledged messages by the driver
-   repeated string messages_seen = 9;
+   // no longer in use - superseded by DriverMessageAck
+   // repeated string messages_seen = 9;
+   reserved 9;
 
    // a map of extra sensors
    map<string, int32> extraSensors = 10;
@@ -341,6 +360,7 @@ message ToPitMessage {
       EditTeamEmailAddress email_address = 8;
       SectorComplete sector_details = 9;
       VoiceCallRequest voice_call_request = 10;
+      DriverMessageAck message_ack = 11;
    }
 }
 

@@ -142,6 +142,17 @@ message CarConnectionStatus {
   bool isConnected = 3;
 }
 
+// the driver read and dismissed a message that was sent from the pits
+message CarDriverMessageAck {
+  string trackCode = 1;
+  string carNumber = 2;
+  int32 timestamp = 3;
+  // the seq_num of the DriverMessage that was acknowledged
+  int32 messageSeqNum = 4;
+  // the text of the acknowledged message, so the pits can match it up
+  string text = 5;
+}
+
 
 message ToPitCrewMessage {
    int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
@@ -155,6 +166,7 @@ message ToPitCrewMessage {
       // reserved 8;
       CarVoiceCallRequest call_request = 9;
       CarConnectionStatus connected_status = 10;
+      CarDriverMessageAck message_ack = 11;
    }
 }
 
