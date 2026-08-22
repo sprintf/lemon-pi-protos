@@ -151,6 +151,7 @@ message CarDriverMessageAck {
   int32 messageSeqNum = 4;
   // the text of the acknowledged message, so the pits can match it up
   string text = 5;
+  DriverResponse response = 6;
 }
 
 
