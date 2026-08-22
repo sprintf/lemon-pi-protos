@@ -129,11 +129,13 @@ message CarAuthResponse {
   string bearerToken = 1;
 }
 
-// the car is requesting to talk
+// the car is requesting to talk, or raising an alarm
 message CarVoiceCallRequest {
   string trackCode = 1;
   string carNumber = 2;
   int32 timestamp = 3;
+  // the driver raised an alarm from the button rather than asking for a chat
+  bool isEmergency = 4;
 }
 
 message CarConnectionStatus {

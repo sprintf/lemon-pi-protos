@@ -341,6 +341,9 @@ message VoiceCallRequest {
    int32 timestamp = 2;
 
    string sender = 3;
+
+   // the driver raised an alarm from the button rather than asking for a chat
+   bool isEmergency = 4;
 }
 
 
