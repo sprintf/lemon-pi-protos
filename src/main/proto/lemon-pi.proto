@@ -346,6 +346,60 @@ message VoiceCallRequest {
    bool isEmergency = 4;
 }
 
+// why a car is about to drop off the air. proto3 default is 0, so an
+// unrecognised value from a newer app reads as "unknown", not as a sleep
+enum OfflineReason {
+   OFFLINE_UNKNOWN = 0;
+   OFFLINE_SLEEP = 1;        // the server's sleep request was honoured
+   OFFLINE_BACKGROUND = 2;   // dash left the screen: power button, home, app switch
+}
+
+// sent immediately before the car closes its link on purpose, so the pits can
+// tell a deliberate disconnect from a lost one. Not sent for a dropped connection
+message GoingOffline {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+   OfflineReason reason = 4;
+}
+
+// device health, sent every ten minutes. Everything here is best-effort:
+// a field the device cannot report is left at its default
+message DeviceTelemetry {
+   int32 seq_num = 1;
+   int32 timestamp = 2;
+   string sender = 3;
+
+   // power
+   int32 battery_percent = 4;       // -1 if unknown
+   bool battery_charging = 5;
+   float battery_temp_c = 6;
+   string thermal_status = 7;       // none/light/moderate/severe/critical/emergency/shutdown
+
+   // gps
+   float gps_accuracy_m = 8;
+   float gps_rate_hz = 9;
+   string gps_source = 10;          // "internal" or "ble"
+
+   // network
+   string network_type = 11;        // "wifi", "cellular", "none"
+   int32 signal_level = 12;         // 0..4 as Android reports it, -1 if unknown
+
+   // audio
+   bool voice_comms_enabled = 13;
+   bool voice_comms_connected = 14; // actually joined to the audio room
+
+   // which BLE peripherals are up: "gps", "obd", "driver_button", "puck"
+   repeated string bluetooth_connected = 15;
+
+   // the device itself
+   string manufacturer = 16;
+   string model = 17;
+   string os_version = 18;          // e.g. "15"
+   string app_version = 19;         // e.g. "1.28"
+   int64 app_uptime_sec = 20;       // since the process started
+}
+
 
 message ToCarMessage {
    oneof to_car {
@@ -377,6 +431,8 @@ message ToPitMessage {
       SectorComplete sector_details = 9;
       VoiceCallRequest voice_call_request = 10;
       DriverMessageAck message_ack = 11;
+      GoingOffline going_offline = 12;
+      DeviceTelemetry device_telemetry = 13;
    }
 }
 
