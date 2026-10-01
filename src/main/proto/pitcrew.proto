@@ -172,6 +172,16 @@ message CarDriverSentMessage {
   string inReplyToText = 6;
 }
 
+// how the driver talks to the pits, from the car's device telemetry. Sent when it is first
+// known and whenever it changes, so the pit page can offer a chat when the driver can speak.
+message CarCommsStatus {
+  string trackCode = 1;
+  string carNumber = 2;
+  bool speechToTextEnabled = 3;
+  // what speech to text records from: "helmet", "tablet", "none" - empty when it is off
+  string micSource = 4;
+}
+
 message ToPitCrewMessage {
    int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
    int64 timestamp = 7;   // wall-clock ms when Meringue emitted this message — use as replay cursor
@@ -186,6 +196,7 @@ message ToPitCrewMessage {
       CarConnectionStatus connected_status = 10;
       CarDriverMessageAck message_ack = 11;
       CarDriverSentMessage driver_sent_message = 12;
+      CarCommsStatus comms_status = 13;
    }
 }
 
