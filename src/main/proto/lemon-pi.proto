@@ -342,8 +342,30 @@ message VoiceCallRequest {
 
    string sender = 3;
 
-   // the driver raised an alarm from the button rather than asking for a chat
-   bool isEmergency = 4;
+   // the driver raised an alarm from the button rather than asking for a chat.
+   // Deprecated: the alarm is now an empty DriverSentMessage. Still sent by apps up to 1.28,
+   // so honour it until those have aged out, then reserve 4.
+   bool isEmergency = 4 [deprecated = true];
+}
+
+// something the driver sent to the pits from the car. Empty text is a wave - the
+// driver wants the pits' attention - otherwise it is what the driver said, spoken
+// into the helmet mic and turned into text on the tablet.
+message DriverSentMessage {
+   int32 seq_num = 1;
+
+   int32 timestamp = 2;
+
+   string sender = 3;
+
+   // what the driver said, or empty for a wave
+   string text = 4;
+
+   // the seq_num of the DriverMessage this answers, or 0 when the driver spoke unprompted
+   int32 in_reply_to = 5;
+
+   // the text of the DriverMessage this answers, so the pits can match it up
+   string in_reply_to_text = 6;
 }
 
 // why a car is about to drop off the air. proto3 default is 0, so an
@@ -388,6 +410,8 @@ message DeviceTelemetry {
    // audio
    bool voice_comms_enabled = 13;
    bool voice_comms_connected = 14; // actually joined to the audio room
+   bool speech_to_text_enabled = 21; // the driver speaks, the pits get text - never with voice comms
+   string mic_source = 22;          // speech to text records from: "helmet", "tablet", "none"
 
    // which BLE peripherals are up: "gps", "obd", "driver_button", "puck"
    repeated string bluetooth_connected = 15;
@@ -433,6 +457,7 @@ message ToPitMessage {
       DriverMessageAck message_ack = 11;
       GoingOffline going_offline = 12;
       DeviceTelemetry device_telemetry = 13;
+      DriverSentMessage driver_sent_message = 14;
    }
 }
 
