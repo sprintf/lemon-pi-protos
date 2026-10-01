@@ -134,8 +134,10 @@ message CarVoiceCallRequest {
   string trackCode = 1;
   string carNumber = 2;
   int32 timestamp = 3;
-  // the driver raised an alarm from the button rather than asking for a chat
-  bool isEmergency = 4;
+  // the driver raised an alarm from the button rather than asking for a chat.
+  // Deprecated: the alarm is now a CarDriverSentMessage with empty text. Still set for
+  // cars on apps up to 1.28 until those have aged out, then reserve 4.
+  bool isEmergency = 4 [deprecated = true];
 }
 
 message CarConnectionStatus {
@@ -156,6 +158,19 @@ message CarDriverMessageAck {
   DriverResponse response = 6;
 }
 
+// something the driver sent from the car. Empty text is a wave - the driver wants the
+// pits' attention - otherwise it is what the driver said into the helmet mic, as text.
+message CarDriverSentMessage {
+  string trackCode = 1;
+  string carNumber = 2;
+  int32 timestamp = 3;
+  // what the driver said, or empty for a wave
+  string text = 4;
+  // the seq_num of the DriverMessage this answers, or 0 when the driver spoke unprompted
+  int32 inReplyTo = 5;
+  // the text of the DriverMessage this answers, so the pits can match it up
+  string inReplyToText = 6;
+}
 
 message ToPitCrewMessage {
    int32 seq_num = 1;      // within-session counter, resets on restart — use for gap/duplicate detection only
@@ -170,6 +185,7 @@ message ToPitCrewMessage {
       CarVoiceCallRequest call_request = 9;
       CarConnectionStatus connected_status = 10;
       CarDriverMessageAck message_ack = 11;
+      CarDriverSentMessage driver_sent_message = 12;
    }
 }
 
