@@ -1,0 +1,79 @@
+name: Generate and build Swift package
+
+# The Swift package is consumed via SwiftPM straight from this repo's git tags,
+# so the generated sources in swift/LemonPiProtos must be committed. On PRs this
+# workflow regenerates them and pushes any changes back to the PR branch; on
+# master and tags it checks they are up to date. Either way it then builds the
+# package for iOS.
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  swift:
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+
+      - name: Read generator versions from Package.swift
+        id: versions
+        run: |
+          echo "swift_protobuf=$(grep 'apple/swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+          echo "grpc_swift_protobuf=$(grep 'grpc/grpc-swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+
+      - name: Install protoc
+        run: brew install protobuf
+
+      - name: Cache Swift code generators
+        id: cache-generators
+        uses: actions/cache@v4
+        with:
+          path: ~/swift-generators
+          key: swift-generators-${{ runner.os }}-${{ steps.versions.outputs.swift_protobuf }}-${{ steps.versions.outputs.grpc_swift_protobuf }}
+
+      - name: Build Swift code generators
+        if: steps.cache-generators.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/swift-generators/bin
+          cd ~/swift-generators
+          git clone --depth 1 -b "${{ steps.versions.outputs.swift_protobuf }}" https://github.com/apple/swift-protobuf.git
+          git clone --depth 1 -b "${{ steps.versions.outputs.grpc_swift_protobuf }}" https://github.com/grpc/grpc-swift-protobuf.git
+          swift build -c release --package-path swift-protobuf --product protoc-gen-swift
+          swift build -c release --package-path grpc-swift-protobuf --product protoc-gen-grpc-swift-2
+          cp swift-protobuf/.build/release/protoc-gen-swift bin/
+          cp grpc-swift-protobuf/.build/release/protoc-gen-grpc-swift-2 bin/
+
+      - name: Generate Swift sources
+        run: PATH="$HOME/swift-generators/bin:$PATH" scripts/generate-swift.sh
+
+      - name: Commit regenerated sources to PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          if [ -n "$(git status --porcelain swift/)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898333+github-actions[bot]@users.noreply.github.com"
+            git add swift/
+            git commit -m "Regenerate Swift sources"
+            git push
+          fi
+
+      - name: Check generated sources are up to date
+        run: |
+          if [ -n "$(git status --porcelain swift/)" ]; then
+            git status --porcelain swift/
+            echo "::error::swift/LemonPiProtos is out of date with the .proto files - run scripts/generate-swift.sh and commit the result"
+            exit 1
+          fi
+
+      - name: Build for iOS
+        run: xcodebuild build -scheme LemonPiProtos -destination 'generic/platform=iOS' -skipPackagePluginValidation
