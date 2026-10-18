@@ -28,8 +28,8 @@ jobs:
       - name: Read generator versions from Package.swift
         id: versions
         run: |
-          echo "swift_protobuf=$(grep 'swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
-          echo "grpc_swift_protobuf=$(grep 'grpc-swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+          echo "swift_protobuf=$(grep 'apple/swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
+          echo "grpc_swift_protobuf=$(grep 'grpc/grpc-swift-protobuf.git' Package.swift | sed -E 's/.*exact: "([^"]+)".*/\1/')" >> "$GITHUB_OUTPUT"
 
       - name: Install protoc
         run: brew install protobuf
