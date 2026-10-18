@@ -6,3 +6,8 @@
 
 # Ignore Gradle build output directory
 build
+
+# Swift Package Manager
+.build
+.swiftpm
+Package.resolved

@@ -42,9 +42,16 @@ Message types include:
 The project uses the `com.google.protobuf` Gradle plugin to generate:
 - Java Protocol Buffer classes
 - gRPC service stubs (Java and Kotlin)
-- Python stubs (found in `generated/` directory)
 
-Generated files are placed in `build/generated/source/proto/` and should not be manually edited.
+Generated JVM files are placed in `build/generated/source/proto/` and should not be manually edited.
+
+## Swift Package (iOS)
+
+`Package.swift` at the repo root exposes a `LemonPiProtos` Swift package (iOS 18+ / macOS 15+, built on swift-protobuf and grpc-swift 2). SwiftPM consumes it directly from the git tags, so the generated sources in `swift/LemonPiProtos/` are committed.
+
+- Regenerate with `scripts/generate-swift.sh` (needs `protoc`, `protoc-gen-swift` and `protoc-gen-grpc-swift-2` on PATH)
+- The `swift.yml` workflow regenerates them on PRs and pushes the result back to the PR branch, and fails on master/tags if they are stale
+- Generator versions are read from the `exact:` versions in `Package.swift`; bump them there
 
 ## Dependencies
 
