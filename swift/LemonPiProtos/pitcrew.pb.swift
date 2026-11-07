@@ -296,6 +296,37 @@ public nonisolated struct PitCarData: @unchecked Sendable {
     set {_uniqueStorage()._carBehindGap = newValue}
   }
 
+  /// the same neighbours within this car's class; empty when there is none in class
+  public var carAheadInClass: String {
+    get {_storage._carAheadInClass}
+    set {_uniqueStorage()._carAheadInClass = newValue}
+  }
+
+  public var gapInClass: String {
+    get {_storage._gapInClass}
+    set {_uniqueStorage()._gapInClass = newValue}
+  }
+
+  public var carAheadInClassAvgLapTime: Float {
+    get {_storage._carAheadInClassAvgLapTime}
+    set {_uniqueStorage()._carAheadInClassAvgLapTime = newValue}
+  }
+
+  public var carBehindInClass: String {
+    get {_storage._carBehindInClass}
+    set {_uniqueStorage()._carBehindInClass = newValue}
+  }
+
+  public var carBehindInClassGap: String {
+    get {_storage._carBehindInClassGap}
+    set {_uniqueStorage()._carBehindInClassGap = newValue}
+  }
+
+  public var carBehindInClassAvgLapTime: Float {
+    get {_storage._carBehindInClassAvgLapTime}
+    set {_uniqueStorage()._carBehindInClassAvgLapTime = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -983,7 +1014,7 @@ nonisolated extension PitCarDataRequest: SwiftProtobuf.Message, SwiftProtobuf._M
 
 nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = "PitCarData"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}carNumber\0\u{1}timestamp\0\u{1}flagStatus\0\u{1}lapCount\0\u{1}position\0\u{1}positionInClass\0\u{1}lastLapTime\0\u{1}gap\0\u{1}coolantTemp\0\u{1}fuelRemainingPercent\0\u{1}driverMessage\0\u{1}carAhead\0\u{1}carBehind\0\u{1}fastestLap\0\u{1}fastestLapTime\0\u{1}extraSensors\0\u{1}avgLapTime\0\u{1}carAheadAvgLapTime\0\u{1}carBehindAvgLapTime\0\u{1}carBehindGap\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}carNumber\0\u{1}timestamp\0\u{1}flagStatus\0\u{1}lapCount\0\u{1}position\0\u{1}positionInClass\0\u{1}lastLapTime\0\u{1}gap\0\u{1}coolantTemp\0\u{1}fuelRemainingPercent\0\u{1}driverMessage\0\u{1}carAhead\0\u{1}carBehind\0\u{1}fastestLap\0\u{1}fastestLapTime\0\u{1}extraSensors\0\u{1}avgLapTime\0\u{1}carAheadAvgLapTime\0\u{1}carBehindAvgLapTime\0\u{1}carBehindGap\0\u{1}carAheadInClass\0\u{1}gapInClass\0\u{1}carAheadInClassAvgLapTime\0\u{1}carBehindInClass\0\u{1}carBehindInClassGap\0\u{1}carBehindInClassAvgLapTime\0")
 
   fileprivate class _StorageClass {
     var _carNumber: String = String()
@@ -1006,6 +1037,12 @@ nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     var _carAheadAvgLapTime: Float = 0
     var _carBehindAvgLapTime: Float = 0
     var _carBehindGap: String = String()
+    var _carAheadInClass: String = String()
+    var _gapInClass: String = String()
+    var _carAheadInClassAvgLapTime: Float = 0
+    var _carBehindInClass: String = String()
+    var _carBehindInClassGap: String = String()
+    var _carBehindInClassAvgLapTime: Float = 0
 
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
@@ -1036,6 +1073,12 @@ nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       _carAheadAvgLapTime = source._carAheadAvgLapTime
       _carBehindAvgLapTime = source._carBehindAvgLapTime
       _carBehindGap = source._carBehindGap
+      _carAheadInClass = source._carAheadInClass
+      _gapInClass = source._gapInClass
+      _carAheadInClassAvgLapTime = source._carAheadInClassAvgLapTime
+      _carBehindInClass = source._carBehindInClass
+      _carBehindInClassGap = source._carBehindInClassGap
+      _carBehindInClassAvgLapTime = source._carBehindInClassAvgLapTime
     }
   }
 
@@ -1074,6 +1117,12 @@ nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         case 18: try { try decoder.decodeSingularFloatField(value: &_storage._carAheadAvgLapTime) }()
         case 19: try { try decoder.decodeSingularFloatField(value: &_storage._carBehindAvgLapTime) }()
         case 20: try { try decoder.decodeSingularStringField(value: &_storage._carBehindGap) }()
+        case 21: try { try decoder.decodeSingularStringField(value: &_storage._carAheadInClass) }()
+        case 22: try { try decoder.decodeSingularStringField(value: &_storage._gapInClass) }()
+        case 23: try { try decoder.decodeSingularFloatField(value: &_storage._carAheadInClassAvgLapTime) }()
+        case 24: try { try decoder.decodeSingularStringField(value: &_storage._carBehindInClass) }()
+        case 25: try { try decoder.decodeSingularStringField(value: &_storage._carBehindInClassGap) }()
+        case 26: try { try decoder.decodeSingularFloatField(value: &_storage._carBehindInClassAvgLapTime) }()
         default: break
         }
       }
@@ -1142,6 +1191,24 @@ nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       if !_storage._carBehindGap.isEmpty {
         try visitor.visitSingularStringField(value: _storage._carBehindGap, fieldNumber: 20)
       }
+      if !_storage._carAheadInClass.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._carAheadInClass, fieldNumber: 21)
+      }
+      if !_storage._gapInClass.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._gapInClass, fieldNumber: 22)
+      }
+      if _storage._carAheadInClassAvgLapTime.bitPattern != 0 {
+        try visitor.visitSingularFloatField(value: _storage._carAheadInClassAvgLapTime, fieldNumber: 23)
+      }
+      if !_storage._carBehindInClass.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._carBehindInClass, fieldNumber: 24)
+      }
+      if !_storage._carBehindInClassGap.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._carBehindInClassGap, fieldNumber: 25)
+      }
+      if _storage._carBehindInClassAvgLapTime.bitPattern != 0 {
+        try visitor.visitSingularFloatField(value: _storage._carBehindInClassAvgLapTime, fieldNumber: 26)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1171,6 +1238,12 @@ nonisolated extension PitCarData: SwiftProtobuf.Message, SwiftProtobuf._MessageI
         if _storage._carAheadAvgLapTime != rhs_storage._carAheadAvgLapTime {return false}
         if _storage._carBehindAvgLapTime != rhs_storage._carBehindAvgLapTime {return false}
         if _storage._carBehindGap != rhs_storage._carBehindGap {return false}
+        if _storage._carAheadInClass != rhs_storage._carAheadInClass {return false}
+        if _storage._gapInClass != rhs_storage._gapInClass {return false}
+        if _storage._carAheadInClassAvgLapTime != rhs_storage._carAheadInClassAvgLapTime {return false}
+        if _storage._carBehindInClass != rhs_storage._carBehindInClass {return false}
+        if _storage._carBehindInClassGap != rhs_storage._carBehindInClassGap {return false}
+        if _storage._carBehindInClassAvgLapTime != rhs_storage._carBehindInClassAvgLapTime {return false}
         return true
       }
       if !storagesAreEqual {return false}
