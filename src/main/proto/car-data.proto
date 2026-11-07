@@ -50,6 +50,13 @@ message CarDataResponse {
   float carAheadAvgLapTime = 18;
   float carBehindAvgLapTime = 19;
   string carBehindGap = 20;
+  // the same neighbours within this car's class; empty when there is none in class
+  string carAheadInClass = 21;
+  string gapInClass = 22;
+  float carAheadInClassAvgLapTime = 23;
+  string carBehindInClass = 24;
+  string carBehindInClassGap = 25;
+  float carBehindInClassAvgLapTime = 26;
 }
 
 message CarPositionDataRequest {
